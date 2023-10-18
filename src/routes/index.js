@@ -1,3 +1,3 @@
-import { helloRoute } from "./helloRoute";
+import { protectRout } from "./protectRoute";
 
-export const routes = [helloRoute];
+export const routes = [];
