@@ -1,3 +1,11 @@
-import { protectRout } from "./protectRoute";
+import { getUserConversationsRoute } from "./getUserConversationsRoute";
+import { getUsersRoute } from "./getUsersRoute";
+import { createConversationRoute } from "./createConversationRoute";
 
-export const routes = [];
+export { protectRoute } from "./protectRoute";
+
+export const routes = [
+  getUserConversationsRoute,
+  createConversationRoute,
+  getUsersRoute,
+];
