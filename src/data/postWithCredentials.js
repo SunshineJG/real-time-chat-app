@@ -1,4 +1,4 @@
-import { auth } from "../firebase.configp";
+import { auth } from "../firebase.config";
 
 export const postWithCredentials = async (url, bodyData) => {
   const user = auth.currentUser;

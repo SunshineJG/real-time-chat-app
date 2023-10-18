@@ -1,3 +1,33 @@
+import { Link } from "react-router-dom";
+import { useProtectedResource } from "../data";
+import { useUser } from "../auth";
+
 export const ConversationsListPage = () => {
-  return <h1>This is the conversations page</h1>;
+  const { user } = useUser();
+  const { isLoading, data: conversations } = useProtectedResource(
+    `http://localhost:8080/users/${user.uid}/conversations`,
+    []
+  );
+
+  return isLoading ? (
+    <p>Loading messages... </p>
+  ) : (
+    <div className="centered-container">
+      <h1 className="section-heading">Conversations List</h1>
+      {conversations.map((conversation) => (
+        <Link
+          to={`http://localhost:8080/conversations/${conversation._id}`}
+          key={conversation._id}
+        >
+          <div className="list-item">
+            <h3>{conversation.name}</h3>
+            <p>{conversation.memberIds.length} members</p>
+          </div>
+        </Link>
+      ))}
+      <Link to="/new-conversation">
+        <button className="full-width space-before">New Conversation</button>
+      </Link>
+    </div>
+  );
 };

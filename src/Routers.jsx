@@ -1,6 +1,10 @@
 import { Routes, Route } from "react-router-dom";
 import { PrivateRoute, SignInPage } from "./auth";
-import { ConversationsListPage } from "./conversations";
+import {
+  ConversationsListPage,
+  NewConversationPage,
+  ConversationPage,
+} from "./conversations";
 
 const routes = [
   {
@@ -11,6 +15,16 @@ const routes = [
     path: "/",
     private: true,
     Component: ConversationsListPage,
+  },
+  {
+    path: "/new-conversation",
+    private: true,
+    Component: NewConversationPage,
+  },
+  {
+    path: "/conversations/:id",
+    private: true,
+    Component: ConversationPage,
   },
 ];
 
