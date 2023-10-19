@@ -16,7 +16,7 @@ export const ConversationsListPage = () => {
       <h1 className="section-heading">Conversations List</h1>
       {conversations.map((conversation) => (
         <Link
-          to={`http://localhost:8080/conversations/${conversation._id}`}
+          to={`http://localhost:5173/conversations/${conversation._id}`}
           key={conversation._id}
         >
           <div className="list-item">
