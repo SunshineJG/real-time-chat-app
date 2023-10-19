@@ -5,7 +5,12 @@ import socketIo from "socket.io";
 import cors from "cors";
 import admin from "./firebase.config";
 import { routes, protectRoute } from "./routes";
-import { db, getConversation } from "./db";
+import {
+  db,
+  getCanUserAccessConversation,
+  getConversation,
+  addMessageToConversation,
+} from "./db";
 
 const app = express();
 
@@ -53,6 +58,20 @@ io.on("connection", async (socket) => {
 
   const conversation = await getConversation(conversationId);
   socket.emit("heresYourConversation", conversation);
+
+  socket.on("postMessage", async ({ text, conversationId }) => {
+    // make sure the user is member
+    // add their message to the conversation in db
+    // get the updated conversation
+    // emit an event notifying everyone that there's a new message
+    const { user_id: userId } = socket.user;
+    const isMember = await getCanUserAccessConversation(userId, conversationId);
+    if (isMember) {
+      await addMessageToConversation(text, userId, conversationId);
+      const updatedConversation = await getConversation(conversationId);
+      io.emit("messageUpdated", updatedConversation.messages);
+    }
+  });
 
   socket.on("disconnect", () => {
     console.log("Client disconnected!");

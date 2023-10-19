@@ -1,6 +1,6 @@
 import { db } from "./db";
 
 export const getUser = async (id) => {
-  const users = await db.getConnection().collection("users").find({ id });
-  return users;
+  const user = await db.getConnection().collection("users").findOne({ id: id });
+  return user;
 };

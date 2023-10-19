@@ -29,13 +29,14 @@ export const getConversation = async (conversationId) => {
   const members = await Promise.all(
     conversation.memberIds.map((id) => getUser(id))
   );
+
   const usersForMessages = await Promise.all(
     conversation.messages.map((message) => getUser(message.postedById))
   );
 
   const populatedMessages = conversation.messages.map((message, i) => ({
     ...message,
-    postBy: usersForMessages[i],
+    postedBy: usersForMessages[i].name,
   }));
 
   const populatedConversation = {
@@ -43,6 +44,6 @@ export const getConversation = async (conversationId) => {
     members,
     messages: populatedMessages,
   };
-
+  console.log("populatedConversatoin: ", populatedConversation);
   return populatedConversation;
 };
